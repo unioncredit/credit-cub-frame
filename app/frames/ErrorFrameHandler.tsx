@@ -2,18 +2,18 @@
 import { Button } from "frog";
 import { ChatBox, ChatContainer } from "@/components/chat";
 
-export const start = (c) => {
+export const ErrorFrameHandler = (c) => {
   return c.res({
     image: (
       <ChatContainer>
         <ChatBox
-          name={"Pheonix"}
-          content={"KYM is the greatest site for documenting memes lol! Look at all the evidence they have there!"}
+          name={"Credit Cub"}
+          content={"Sorry an error occurred, please try again shortly."}
         />
       </ChatContainer>
     ),
     intents: [
-      <Button value="apply">Apply for credit</Button>,
+      <Button.Reset>🏠 Take me home</Button.Reset>,
     ],
   })
 }
