@@ -2,7 +2,8 @@
 
 import { Frog } from 'frog'
 import { handle } from 'frog/next'
-import { neynar } from "frog/hubs";
+import { neynar as nnHub } from "frog/hubs";
+import { neynar as nnMiddleware } from "frog/middlewares";
 import {
   ApplyFrameHandler,
   ClaimedFrameHandler,
@@ -12,7 +13,7 @@ import {
 } from "@/frames";
 
 const app = new Frog({
-  hub: neynar({apiKey: process.env.NEYNAR_API_KEY}),
+  hub: nnHub({apiKey: process.env.NEYNAR_API_KEY}),
   assetsPath: '/',
   basePath: '/api',
   imageOptions: {
@@ -28,6 +29,12 @@ const app = new Frog({
   },
 })
 
+const neynarMiddleware = nnMiddleware({
+  apiKey: process.env.NEYNAR_API_KEY,
+  features: ['interactor'],
+})
+
+// todo: move this to middleware
 const verified = (c, fn) => {
   if (process.env.ENV === "development" || c.verified) {
     return fn(c);
@@ -37,7 +44,7 @@ const verified = (c, fn) => {
 
 app.frame('/', StartFrameHandler);
 app.frame('/error', ErrorFrameHandler);
-app.frame('/apply', (c) => verified(c, ApplyFrameHandler));
+app.frame('/apply', neynarMiddleware, (c) => verified(c, ApplyFrameHandler));
 app.frame('/success', (c) => verified(c, SuccessFrameHandler))
 app.frame('/claimed', (c) => verified(c, ClaimedFrameHandler))
 
