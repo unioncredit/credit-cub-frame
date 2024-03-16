@@ -21,7 +21,7 @@ init(process.env.AIRSTACK_API_KEY!);
 const app = new Frog({
   hub: nnHub({apiKey: process.env.NEYNAR_API_KEY!}),
   assetsPath: '/',
-  basePath: '/api',
+  basePath: '/frame',
   imageOptions: {
     width: 1200,
     height: 630,
