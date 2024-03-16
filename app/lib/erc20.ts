@@ -48,7 +48,7 @@ export const getErc20BalancesForUser = async (address: string): Promise<Record<s
   const ethereumData = data.Ethereum.TokenBalance;
   if (ethereumData?.length > 0) {
     ethereumData.forEach((balance) => {
-      const ether = parseFloat(ethers.formatUnits(balance.amount, 18));
+      const ether = parseFloat(ethers.utils.formatUnits(balance.amount, 18));
       const token = balance.token;
 
       if (balances[token.symbol]) {
@@ -59,19 +59,19 @@ export const getErc20BalancesForUser = async (address: string): Promise<Record<s
     })
   }
 
-  // const baseData = data.Base.TokenBalance;
-  // if (baseData?.length > 0) {
-  //   baseData.forEach((balance) => {
-  //     const ether = parseFloat(ethers.formatUnits(balance.amount, 18));
-  //     const token = balance.token;
-  //
-  //     if (balances[token.symbol]) {
-  //       balances[token.symbol] += ether
-  //     } else {
-  //       balances[token.symbol] = ether
-  //     }
-  //   })
-  // }
+  const baseData = data.Base.TokenBalance;
+  if (baseData?.length > 0) {
+    baseData.forEach((balance) => {
+      const ether = parseFloat(ethers.utils.formatUnits(balance.amount, 18));
+      const token = balance.token;
+
+      if (balances[token.symbol]) {
+        balances[token.symbol] += ether
+      } else {
+        balances[token.symbol] = ether
+      }
+    })
+  }
 
   return balances;
 };

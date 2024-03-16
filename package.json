@@ -10,9 +10,10 @@
   },
   "dependencies": {
     "@airstack/frames": "^1.0.12",
+    "@openzeppelin/defender-relay-client": "^1.54.1",
     "@unioncredit/data": "^1.0.19",
     "@vercel/kv": "^1.0.1",
-    "ethers": "^6.11.1",
+    "ethers": "^5.7.2",
     "frog": "latest",
     "hono": "^4",
     "next": "14.1.0",
