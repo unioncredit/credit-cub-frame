@@ -27,8 +27,7 @@ export const SuccessFrameHandler = async (c: any) => {
     return ErrorFrameHandler(c);
   }
 
-  // submit transaction in the background to avoid frame timeout
-  console.log("submitting tx");
+  // submit transaction via https://defer.run/ to avoid frame timeout
   await submitUpdateTrustTransaction(address, trustAmount);
   await kv.set(`session:${user.fid}`, { ...session, address, claimed: true })
 

@@ -6,6 +6,7 @@ import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
 import { defer } from "@defer/client";
 
 const submitUpdateTrustTransaction = async(address: string, trustAmount: number) => {
+  console.log("Submitting update trust transaction...");
   try {
     const credentials = {
       apiKey: process.env.DEFENDER_API_KEY!,
@@ -31,20 +32,28 @@ const submitUpdateTrustTransaction = async(address: string, trustAmount: number)
       signerOrProvider: signer,
     })
 
+    console.log({ data });
     const safeSdk = await Safe.create({ ethAdapter, safeAddress: SAFE_ADDRESS })
+    console.log("Created safeSdk instance");
+
     const tx = await safeSdk.createTransaction({
       transactions: [{
         ...data,
         value: BigInt(0),
       }],
     })
+    console.log("Created safe transaction");
 
     const hash = await safeSdk.getTransactionHash(tx);
+    console.log("Created safe transaction hash");
+
     await safeSdk.approveTransactionHash(hash);
+    console.log("Approved safe transaction hash");
+
     await safeSdk.executeTransaction(tx);
-    console.log("safesdk transaction executed");
+    console.log("Safe transaction executed!");
   } catch (err) {
-    console.log("failed to create update trust transaction: " + err);
+    console.log("Failed to create update trust transaction: " + err);
   }
 };
 
