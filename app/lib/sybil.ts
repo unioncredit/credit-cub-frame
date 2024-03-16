@@ -49,6 +49,9 @@ const getSybilScore = async (user: NeynarUser, address: InteractorAddress): Prom
   if (isFollowedByVip) {
     score += 1;
   }
+  if (isCoinbaseVerified) {
+    score +=1 ;
+  }
 
   return score;
 }
