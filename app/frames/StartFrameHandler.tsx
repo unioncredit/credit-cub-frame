@@ -10,7 +10,7 @@ export const StartFrameHandler = async (c) => {
       <ChatContainer image={"lobby"}>
         <ChatBox name={"Credit Cub"}>
           <Text m={0} size={48} weight={600}>
-            Welcome to Credit Cubs Credit Club!
+            Welcome to Credit Cub's Credit Club!
           </Text>
 
           <Text mt={32} size={48}>
