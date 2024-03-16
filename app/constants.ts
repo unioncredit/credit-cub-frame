@@ -1,8 +1,8 @@
 import { base, mainnet } from "viem/chains";
 
-export const ZORA_COLLECTION_ID = "0x060f3edd18c47f59bd23d063bbeb9aa4a8fec6df";
-export const ZORA_CHAIN_ID = "69";
-export const ZORA_TOKEN_ID = "420";
+export const ZORA_COLLECTION_ID = "0xc523faf3f5a4cb391670ee0a9fba84f844920056";
+export const ZORA_CHAIN_ID = "8453";
+export const ZORA_TOKEN_ID = "1";
 
 export const DWR_FID = 3;
 export const KINGJACOB_FID = 1002;
