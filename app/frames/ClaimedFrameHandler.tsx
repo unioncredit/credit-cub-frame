@@ -6,7 +6,7 @@ import { Session } from "@/types/session";
 import { getInteractor } from "@/utils/neynar";
 import { ErrorFrameHandler } from "@/frames/ErrorFrameHandler";
 import { Text } from "@/components/shared";
-import { SAFE_ADDRESS } from "@/constants";
+import { SAFE_ADDRESS, ZORA_CHAIN_ID, ZORA_COLLECTION_ID, ZORA_TOKEN_ID } from "@/constants";
 
 export const ClaimedFrameHandler = async (c: any) => {
   const user = getInteractor(c);
@@ -27,6 +27,9 @@ export const ClaimedFrameHandler = async (c: any) => {
       </ChatContainer>
     ),
     intents: [
+      <Button.Mint target={`eip155:${ZORA_CHAIN_ID}:${ZORA_COLLECTION_ID}:${ZORA_TOKEN_ID}`}>
+        Mint
+      </Button.Mint>,
       <Button.Link href={"https://app.union.finance/"}>Visit Union</Button.Link>,
       <Button.Link href={`https://app.safe.global/transactions/history?safe=oeth:${SAFE_ADDRESS}`}>
         💰 View Safe
