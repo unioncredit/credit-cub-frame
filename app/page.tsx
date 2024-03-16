@@ -34,7 +34,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.text}>
-          Share this page on Farcaster to see if you are eligible to receive up to $4269 in credit a real imaginary bear.
+          Share this page on Farcaster to see if you are eligible to receive up to $4269 in credit from a real imaginary bear.
         </p>
 
         <a className={styles.button} target="_blank" rel="noopener"
