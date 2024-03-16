@@ -1,40 +1,45 @@
 /** @jsxImportSource frog/jsx */
 import { Button } from "frog";
 import { ChatBox, ChatContainer } from "@/components/chat";
-import { ZORA_CHAIN_ID, ZORA_COLLECTION_ID, ZORA_TOKEN_ID } from "@/constants";
 import { getAddresses, getInteractor } from "@/utils/neynar";
-import { ErrorFrameHandler } from "@/frames/ErrorFrameHandler";
+import { ErrorFrameHandler, DeniedFrameHandler } from "@/frames";
 import { AddressType } from "@/types/neynar";
+import { getMaxSybilScoreForAddresses } from "@/lib/sybil";
 
-export const ApplyFrameHandler = (c) => {
+export const ApplyFrameHandler = async (c) => {
   const user = getInteractor(c);
   if (!user) {
     return ErrorFrameHandler(c);
   }
 
-  // todo: calculate using trust algorithm
-  const calculatedCreditAmount = Math.floor(Math.random() * 2);
-  const isGrantedCredit = calculatedCreditAmount <= 0;
+  const addresses = getAddresses(user).filter(a => a.type !== AddressType.Custody);
+  if (addresses.length <= 0) {
+    console.log(`[${user.fid}] user denied for not having a connected address`);
+    return DeniedFrameHandler(c);
+  }
+
+  try {
+    const sybilScore = await getMaxSybilScoreForAddresses(user, addresses);
+    if (sybilScore <= 0) {
+      console.log(`[${user.fid}] user denied for failing sybil test`);
+      return DeniedFrameHandler(c);
+    }
+  } catch (error) {
+    console.error(error)
+    return ErrorFrameHandler(c);
+  }
 
   return c.res({
     image: (
       <ChatContainer>
         <ChatBox
           name={"Credit Cub"}
-          content={
-            isGrantedCredit
-              ? "Congratulations! I have approved you for 10 DAI in credit. Select the address below that you want to be credited."
-              : "Sorry, you are not worthy of credit at this time. Claim your Free Mint below."
-          }
+          content={"Congratulations! I have approved you for 10 DAI in credit. Select the address below that you want to be credited."}
         />
       </ChatContainer>
     ),
-    intents: isGrantedCredit ? getAddresses(user).map(({ full, short, type }) => (
-      <Button value={full}>{type === AddressType.Custody ? '🟣' : '🟢'} {short}</Button>
-    )) : [
-      <Button.Mint target={`eip155:${ZORA_CHAIN_ID}:${ZORA_COLLECTION_ID}:${ZORA_TOKEN_ID}`}>
-        Mint
-      </Button.Mint>
-    ],
-  })
-}
+    intents: getAddresses(user).map(({ full, short, type }) => (
+      <Button value={full}>{type === AddressType.Custody ? "🟣" : "🟢"} {short}</Button>
+    )),
+  });
+};

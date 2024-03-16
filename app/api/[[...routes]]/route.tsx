@@ -11,6 +11,9 @@ import {
   StartFrameHandler,
   SuccessFrameHandler
 } from "@/frames";
+import { init } from "@airstack/frames";
+
+init(process.env.AIRSTACK_API_KEY);
 
 const app = new Frog({
   hub: nnHub({apiKey: process.env.NEYNAR_API_KEY}),
