@@ -18,7 +18,8 @@ import { Text } from "@/components/shared";
 import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
 import { DefenderRelayProvider, DefenderRelaySigner } from "@openzeppelin/defender-relay-client/lib/ethers";
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
+export const maxDuration = 30;
 
 export const SuccessFrameHandler = async (c: any) => {
   const address = c.buttonValue;
