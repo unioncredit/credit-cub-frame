@@ -8,7 +8,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const frameTags = await getFrameMetadata(
     `${process.env.NEXT_PUBLIC_URL || "http://localhost:3000"}/api`,
   );
+  console.log(frameTags);
   return {
+    title: "Credit Cub's Credit Club",
+    description: 'Share this website on Farcaster to see if you are eligible to receive up to $4269 in credit for free.',
     other: frameTags,
   };
 }
