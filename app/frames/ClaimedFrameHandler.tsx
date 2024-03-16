@@ -30,7 +30,6 @@ export const ClaimedFrameHandler = async (c: any) => {
       <Button.Mint target={`eip155:${ZORA_CHAIN_ID}:${ZORA_COLLECTION_ID}:${ZORA_TOKEN_ID}`}>
         Mint
       </Button.Mint>,
-      <Button.Link href={"https://app.union.finance/"}>Visit Union</Button.Link>,
       <Button.Link href={`https://app.safe.global/transactions/history?safe=oeth:${SAFE_ADDRESS}`}>
         💰 View Safe
       </Button.Link>,
