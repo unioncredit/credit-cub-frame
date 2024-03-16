@@ -18,7 +18,7 @@ import { Text } from "@/components/shared";
 import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
 import { DefenderRelayProvider, DefenderRelaySigner } from "@openzeppelin/defender-relay-client/lib/ethers";
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export const SuccessFrameHandler = async (c: any) => {
   const address = c.buttonValue;
@@ -100,6 +100,7 @@ const submitUpdateTrustTransaction = async(address: string, trustAmount: number)
     const hash = await safeSdk.getTransactionHash(tx);
     await safeSdk.approveTransactionHash(hash);
     await safeSdk.executeTransaction(tx);
+    console.log("safesdk transaction executed");
   } catch (err) {
     console.log("failed to create update trust transaction: " + err);
   }
