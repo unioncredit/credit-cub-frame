@@ -1,7 +1,7 @@
 /** @jsxImportSource frog/jsx */
 
-import { Frog } from 'frog'
-import { handle } from 'frog/next'
+import { Frog } from "frog";
+import { handle } from "frog/next";
 import { neynar as nnHub } from "frog/hubs";
 import { neynar as nnMiddleware } from "frog/middlewares";
 import {
@@ -9,10 +9,13 @@ import {
   ClaimedFrameHandler,
   ErrorFrameHandler,
   StartFrameHandler,
-  SuccessFrameHandler
+  SuccessFrameHandler,
 } from "@/frames";
 import { init } from "@airstack/frames";
+import { config } from "@unioncredit/data";
+import { optimism } from "viem/chains";
 
+config.set("chainId", optimism.id)
 init(process.env.AIRSTACK_API_KEY);
 
 const app = new Frog({
