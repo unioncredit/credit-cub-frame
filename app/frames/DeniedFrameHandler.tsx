@@ -1,7 +1,7 @@
 /** @jsxImportSource frog/jsx */
 import { Button } from "frog";
 import { ChatBox, ChatContainer } from "@/components/chat";
-import { ZORA_CHAIN_ID, ZORA_COLLECTION_ID, ZORA_TOKEN_ID } from "@/constants";
+import { ZORA_COLLECTION_ID, ZORA_TOKEN_ID } from "@/constants";
 import { Text } from "@/components/shared";
 
 export const DeniedFrameHandler = async (c: any) => {
@@ -19,9 +19,9 @@ export const DeniedFrameHandler = async (c: any) => {
       </ChatContainer>
     ),
     intents: [
-      <Button.Mint target={`eip155:${ZORA_CHAIN_ID}:${ZORA_COLLECTION_ID}:${ZORA_TOKEN_ID}`}>
+      <Button.Link href={`https://zora.co/collect/base:${ZORA_COLLECTION_ID}/${ZORA_TOKEN_ID}`}>
         Mint
-      </Button.Mint>
+      </Button.Link>,
     ],
   })
 }
