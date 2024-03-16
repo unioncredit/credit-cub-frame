@@ -20,6 +20,7 @@ import { DefenderRelayProvider, DefenderRelaySigner } from "@openzeppelin/defend
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
+export const dynamic = "force-dynamic";
 
 export const SuccessFrameHandler = async (c: any) => {
   const address = c.buttonValue;
