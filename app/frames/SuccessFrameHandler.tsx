@@ -5,18 +5,9 @@ import { kv } from "@vercel/kv";
 import { Session } from "@/types/session";
 import { getInteractor } from "@/utils/neynar";
 import { ErrorFrameHandler } from "@/frames/ErrorFrameHandler";
-import USER_MANAGER_ABI from "@/abis/userManager.json";
-import {
-  SAFE_ADDRESS,
-  UNION_USER_MANAGER_OPTIMISM,
-  ZORA_CHAIN_ID,
-  ZORA_COLLECTION_ID,
-  ZORA_TOKEN_ID,
-} from "@/constants";
-import { ethers } from "ethers";
+import { SAFE_ADDRESS, ZORA_CHAIN_ID, ZORA_COLLECTION_ID, ZORA_TOKEN_ID } from "@/constants";
 import { Text } from "@/components/shared";
-import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
-import { DefenderRelayProvider, DefenderRelaySigner } from "@openzeppelin/defender-relay-client/lib/ethers";
+import submitUpdateTrustTransaction from "../../defer/submitUpdateTrustTransaction";
 
 export const runtime = 'edge';
 export const maxDuration = 30;
@@ -65,46 +56,3 @@ export const SuccessFrameHandler = async (c: any) => {
     ],
   })
 }
-
-const submitUpdateTrustTransaction = async(address: string, trustAmount: number) => {
-  try {
-    const credentials = {
-      apiKey: process.env.DEFENDER_API_KEY!,
-      apiSecret: process.env.DEFENDER_API_SECRET!,
-    };
-
-    const { DefenderRelaySigner, DefenderRelayProvider } = require('@openzeppelin/defender-relay-client/lib/ethers');
-    const { ethers } = require('ethers');
-
-    const amount = ethers.parseUnits(trustAmount.toString(), 'ether');
-    const provider = new DefenderRelayProvider(credentials);
-    const signer = new DefenderRelaySigner(credentials, provider, { speed: 'fast' });
-
-    const userManager = new ethers.Contract(
-      UNION_USER_MANAGER_OPTIMISM,
-      USER_MANAGER_ABI,
-      signer,
-    );
-
-    const data = await userManager.updateTrust.populateTransaction(address, amount);
-    const ethAdapter = new EthersAdapter({
-      ethers,
-      signerOrProvider: signer,
-    })
-
-    const safeSdk = await Safe.create({ ethAdapter, safeAddress: SAFE_ADDRESS })
-    const tx = await safeSdk.createTransaction({
-      transactions: [{
-        ...data,
-        value: BigInt(0),
-      }],
-    })
-
-    const hash = await safeSdk.getTransactionHash(tx);
-    await safeSdk.approveTransactionHash(hash);
-    await safeSdk.executeTransaction(tx);
-    console.log("safesdk transaction executed");
-  } catch (err) {
-    console.log("failed to create update trust transaction: " + err);
-  }
-};

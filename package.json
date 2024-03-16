@@ -2,6 +2,9 @@
   "name": "credit-cub-frame",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,6 +13,7 @@
   },
   "dependencies": {
     "@airstack/frames": "^1.0.12",
+    "@defer/client": "^2.3.0",
     "@ethersproject/providers": "^5.7.2",
     "@openzeppelin/defender-relay-client": "^1.54.1",
     "@safe-global/api-kit": "^2.2.0",

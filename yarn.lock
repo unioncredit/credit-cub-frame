@@ -104,6 +104,13 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@defer/client@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@defer/client/-/client-2.3.0.tgz#b41fc569f40f012c8facd7ebb650ad3553882db6"
+  integrity sha512-2pCQrasR7+mR5EeOK1NgmP2sXk8Hao4IRnkRLcO2QqJpNJnUJE177m+RhEhp2SCebdIG6MXW4/NwNE5sz/uL8w==
+  dependencies:
+    parse-duration "^1.1.0"
+
 "@esbuild/aix-ppc64@0.19.12":
   version "0.19.12"
   resolved "https://registry.yarnpkg.com/@esbuild/aix-ppc64/-/aix-ppc64-0.19.12.tgz#d1bc06aedb6936b3b6d313bf809a5a40387d2b7f"
@@ -3611,6 +3618,11 @@ parse-css-color@^0.2.1:
   dependencies:
     color-name "^1.1.4"
     hex-rgb "^4.1.0"
+
+parse-duration@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/parse-duration/-/parse-duration-1.1.0.tgz#5192084c5d8f2a3fd676d04a451dbd2e05a1819c"
+  integrity sha512-z6t9dvSJYaPoQq7quMzdEagSFtpGu+utzHqqxmpVWNNZRIXnvqyCvn9XsTdh7c/w0Bqmdz3RB3YnRaKtpRtEXQ==
 
 parse-headers@^2.0.0:
   version "2.0.5"
