@@ -7,6 +7,7 @@ type Props = {
   size?: number;
   align?: 'left' | 'center' | 'right';
   weight?: number;
+  [key: string]: any;
 }
 
 export const Text = ({

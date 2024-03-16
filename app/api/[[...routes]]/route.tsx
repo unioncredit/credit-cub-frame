@@ -16,10 +16,10 @@ import { config } from "@unioncredit/data";
 import { optimism } from "viem/chains";
 
 config.set("chainId", optimism.id)
-init(process.env.AIRSTACK_API_KEY);
+init(process.env.AIRSTACK_API_KEY!);
 
 const app = new Frog({
-  hub: nnHub({apiKey: process.env.NEYNAR_API_KEY}),
+  hub: nnHub({apiKey: process.env.NEYNAR_API_KEY!}),
   assetsPath: '/',
   basePath: '/api',
   imageOptions: {
@@ -41,12 +41,12 @@ const app = new Frog({
 })
 
 const neynarMiddleware = nnMiddleware({
-  apiKey: process.env.NEYNAR_API_KEY,
+  apiKey: process.env.NEYNAR_API_KEY!,
   features: ['interactor'],
 })
 
 // todo: move this to middleware
-const verified = (c, fn) => {
+const verified = (c: any, fn: any) => {
   if (process.env.ENV === "development" || c.verified) {
     return fn(c);
   }

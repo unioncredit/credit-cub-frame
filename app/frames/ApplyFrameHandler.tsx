@@ -10,7 +10,7 @@ import { kv } from "@vercel/kv";
 import { Session } from "@/types/session";
 import { Text } from "@/components/shared";
 
-export const ApplyFrameHandler = async (c) => {
+export const ApplyFrameHandler = async (c: any) => {
   const user = getInteractor(c);
   if (!user) {
     return ErrorFrameHandler(c);
@@ -55,7 +55,7 @@ export const ApplyFrameHandler = async (c) => {
     action: "/success",
     image: (
       <ChatContainer image={"desk"}>
-        <ChatBox padding={16} name={"Credit Cub"}>
+        <ChatBox padding={16}>
           <Text mt={0} size={45}>
             Congrats, you've been approved for ${trustAmount} in credit. Select which Optimism wallet you'd like to claim it from.
           </Text>

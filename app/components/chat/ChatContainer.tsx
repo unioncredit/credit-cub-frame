@@ -6,12 +6,12 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const ChatContainer = ({ image, children }) => (
+export const ChatContainer = ({ image, children }: Props) => (
   <div
     style={{
       display: 'flex',
       alignItems: 'flex-end',
-      backgroundImage: `url(${process.env.NEXT_PUBLIC_URL}/${image}.jpg)`,
+      backgroundImage: `url(${process.env.NEXT_PUBLIC_URL!}/${image}.jpg)`,
       backgroundPosition: 'center',
       backgroundSize: '100%',
       height: '100%',

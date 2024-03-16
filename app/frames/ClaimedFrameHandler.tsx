@@ -8,7 +8,7 @@ import { ErrorFrameHandler } from "@/frames/ErrorFrameHandler";
 import { Text } from "@/components/shared";
 import { SAFE_ADDRESS } from "@/constants";
 
-export const ClaimedFrameHandler = async (c) => {
+export const ClaimedFrameHandler = async (c: any) => {
   const user = getInteractor(c);
   if (!user) {
     return ErrorFrameHandler(c);
@@ -19,7 +19,7 @@ export const ClaimedFrameHandler = async (c) => {
   return c.res({
     image: (
       <ChatContainer image={"desk"}>
-        <ChatBox padding={16} name={"Credit Cub"}>
+        <ChatBox padding={16}>
           <Text mt={0} size={42}>
             You have already claimed. You were approved for {trustAmount} DAI in credit. Visit Union to become a member and start borrowing.
           </Text>

@@ -20,7 +20,7 @@ import { DefenderRelayProvider, DefenderRelaySigner } from "@openzeppelin/defend
 
 export const runtime = 'nodejs';
 
-export const SuccessFrameHandler = async (c) => {
+export const SuccessFrameHandler = async (c: any) => {
   const address = c.buttonValue;
 
   const user = getInteractor(c);
@@ -43,7 +43,7 @@ export const SuccessFrameHandler = async (c) => {
       <ChatContainer image={"desk"}>
         <ChatBox
           padding={16}
-          name={"Credit Cub"}
+         
         >
           <Text mt={0} size={42}>
             Thank you, your ${trustAmount} in credit is on its way, backed solely by CreditCub's trust in you. Your credit may take a few minutes to arrive. Mint to activate your account.
@@ -66,8 +66,8 @@ export const SuccessFrameHandler = async (c) => {
 const submitUpdateTrustTransaction = async(address: string, trustAmount: number) => {
   try {
     const credentials = {
-      apiKey: process.env.DEFENDER_API_KEY,
-      apiSecret: process.env.DEFENDER_API_SECRET,
+      apiKey: process.env.DEFENDER_API_KEY!,
+      apiSecret: process.env.DEFENDER_API_SECRET!,
     };
 
     const { DefenderRelaySigner, DefenderRelayProvider } = require('@openzeppelin/defender-relay-client/lib/ethers');
@@ -79,7 +79,7 @@ const submitUpdateTrustTransaction = async(address: string, trustAmount: number)
 
     const userManager = new ethers.Contract(
       UNION_USER_MANAGER_OPTIMISM,
-      USER_MANAGER_ABI as const,
+      USER_MANAGER_ABI,
       signer,
     );
 
@@ -93,7 +93,7 @@ const submitUpdateTrustTransaction = async(address: string, trustAmount: number)
     const tx = await safeSdk.createTransaction({
       transactions: [{
         ...data,
-        value: 0n,
+        value: BigInt(0),
       }],
     })
 

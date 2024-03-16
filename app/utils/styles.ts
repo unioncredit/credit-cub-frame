@@ -1,6 +1,6 @@
 const VAL_STR = "%val%";
 
-const templates = {
+const templates: Record<string, any> = {
   m: {
     left: "margin",
     right: VAL_STR,
@@ -86,7 +86,7 @@ const templates = {
   }
 };
 
-export function propsToStyles(props) {
+export function propsToStyles(props: any) {
   const { style = {}, ...other } = props;
 
   const generated = Object.keys(other).reduce((acc, key) => {

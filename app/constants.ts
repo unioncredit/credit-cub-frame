@@ -28,7 +28,7 @@ export const TRUST_ERC20_ADDRESSES = {
   ]
 };
 
-export const TRUST_ERC20_PRICES = {
+export const TRUST_ERC20_PRICES: Record<string, number> = {
   "USDC": 1,
   "DAI": 1,
   "USDT": 1,
