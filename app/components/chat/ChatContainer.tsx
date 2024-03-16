@@ -1,11 +1,19 @@
 /** @jsxImportSource frog/jsx */
+import React from "react";
 
-export const ChatContainer = ({ children }) => (
+interface Props {
+  image: "desk" | "lobby" | "reading";
+  children: React.ReactNode;
+}
+
+export const ChatContainer = ({ image, children }) => (
   <div
     style={{
       display: 'flex',
       alignItems: 'flex-end',
-      background: 'white',
+      backgroundImage: `url(${process.env.NEXT_PUBLIC_URL}/${image}.jpg)`,
+      backgroundPosition: 'center',
+      backgroundSize: '100%',
       height: '100%',
       textAlign: 'center',
       width: '100%',

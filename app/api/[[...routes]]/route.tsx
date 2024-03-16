@@ -27,8 +27,13 @@ const app = new Frog({
     height: 630,
     fonts: [
       {
-        name: 'Inter',
+        name: 'Radio Canada',
         weight: 400,
+        source: 'google',
+      },
+      {
+        name: 'Radio Canada',
+        weight: 600,
         source: 'google',
       },
     ],

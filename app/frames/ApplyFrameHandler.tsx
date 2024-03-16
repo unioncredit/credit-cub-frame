@@ -8,6 +8,7 @@ import { getMaxSybilScoreForAddresses } from "@/lib/sybil";
 import { getMaxTrustAmountForAddresses } from "@/lib/trust";
 import { kv } from "@vercel/kv";
 import { Session } from "@/types/session";
+import { Text } from "@/components/shared";
 
 export const ApplyFrameHandler = async (c) => {
   const user = getInteractor(c);
@@ -53,11 +54,12 @@ export const ApplyFrameHandler = async (c) => {
   return c.res({
     action: "/success",
     image: (
-      <ChatContainer>
-        <ChatBox
-          name={"Credit Cub"}
-          content={`Congratulations! I have approved you for ${trustAmount} DAI in credit. Select the address below that you want to be credited.`}
-        />
+      <ChatContainer image={"desk"}>
+        <ChatBox padding={16} name={"Credit Cub"}>
+          <Text mt={0} size={45}>
+            Congrats, you've been approved for ${trustAmount} in credit. Select which Optimism wallet you'd like to claim it from.
+          </Text>
+        </ChatBox>
       </ChatContainer>
     ),
     intents: getAddresses(user).map(({ full, short, type }) => (

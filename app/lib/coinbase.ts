@@ -2,7 +2,7 @@ import { COINBASE_INDEXER_ADDRESS, COINBASE_VERIFIED_ACCOUNT_SCHEMA_ID } from "@
 
 export const isAddressVerified = async (address: string): Promise<boolean> => {
   const ethers = require('ethers');
-  const provider = new ethers.providers.JsonRpcProvider(process.env.BASE_RPC_URL);
+  const provider = new ethers.JsonRpcProvider(process.env.BASE_RPC_URL);
   const indexer = new ethers.Contract(
     COINBASE_INDEXER_ADDRESS,
     [
