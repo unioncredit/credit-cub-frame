@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   );
   return {
     title: "Credit Cub's Credit Club",
-    description: 'Share this website on Farcaster to see if you are eligible to receive up to $4269 in credit for free.',
+    description: 'Share this website on Farcaster to see if you are eligible to receive up to $4269 in credit from a real imaginary bear.',
     other: frameTags,
   };
 }
@@ -34,7 +34,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.text}>
-          Share this page on Farcaster to see if you are eligible to receive up to $4269 in credit for free.
+          Share this page on Farcaster to see if you are eligible to receive up to $4269 in credit a real imaginary bear.
         </p>
 
         <a className={styles.button} target="_blank" rel="noopener"
