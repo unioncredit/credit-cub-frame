@@ -13,6 +13,7 @@
     "@openzeppelin/defender-relay-client": "^1.54.1",
     "@unioncredit/data": "^1.0.19",
     "@vercel/kv": "^1.0.1",
+    "aws-sdk": "^2.1579.0",
     "ethers": "^5.7.2",
     "frog": "latest",
     "hono": "^4",

@@ -51,8 +51,8 @@ const verified = (c, fn) => {
 app.frame('/', StartFrameHandler);
 app.frame('/error', ErrorFrameHandler);
 app.frame('/apply', neynarMiddleware, (c) => verified(c, ApplyFrameHandler));
-app.frame('/success', (c) => verified(c, SuccessFrameHandler))
-app.frame('/claimed', (c) => verified(c, ClaimedFrameHandler))
+app.frame('/success', neynarMiddleware, (c) => verified(c, SuccessFrameHandler))
+app.frame('/claimed', neynarMiddleware, (c) => verified(c, ClaimedFrameHandler))
 
 export const GET = handle(app)
 export const POST = handle(app)

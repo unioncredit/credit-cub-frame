@@ -88,7 +88,7 @@ const getUnionVouchScore = async (address: string): Promise<number> => {
   }
 
   const ethers = require("ethers");
-  const amounts = vouches.map(v => parseFloat(ethers.formatUnits(v.amount, 18)));
+  const amounts = vouches.map(v => parseFloat(ethers.utils.formatUnits(v.amount, 18)));
   amounts.sort((a, b) => a > b ? 0 : 1);
 
   const median = amounts[Math.floor(amounts.length / 2)];

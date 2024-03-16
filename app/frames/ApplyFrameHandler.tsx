@@ -2,7 +2,7 @@
 import { Button } from "frog";
 import { ChatBox, ChatContainer } from "@/components/chat";
 import { getAddresses, getInteractor } from "@/utils/neynar";
-import { DeniedFrameHandler, ErrorFrameHandler } from "@/frames";
+import { ClaimedFrameHandler, DeniedFrameHandler, ErrorFrameHandler } from "@/frames";
 import { AddressType } from "@/types/neynar";
 import { getMaxSybilScoreForAddresses } from "@/lib/sybil";
 import { getMaxTrustAmountForAddresses } from "@/lib/trust";
@@ -15,7 +15,11 @@ export const ApplyFrameHandler = async (c) => {
     return ErrorFrameHandler(c);
   }
 
-  let { trustAmount = 0 } = ((await kv.get(`session:${user.fid}`)) ?? {}) as Session;
+  let { claimed, trustAmount = 0 } = ((await kv.get(`session:${user.fid}`)) ?? {}) as Session;
+  if (claimed) {
+    return ClaimedFrameHandler(c);
+  }
+
   if (trustAmount <= 0) {
     const addresses = getAddresses(user).filter(a => a.type !== AddressType.Custody);
     if (addresses.length <= 0) {
@@ -39,7 +43,7 @@ export const ApplyFrameHandler = async (c) => {
       await kv.set(`session:${user.fid}`, {
         sybilScore,
         trustAmount,
-      })
+      });
     } catch (error) {
       console.error(error);
       return ErrorFrameHandler(c);
@@ -47,6 +51,7 @@ export const ApplyFrameHandler = async (c) => {
   }
 
   return c.res({
+    action: "/success",
     image: (
       <ChatContainer>
         <ChatBox
