@@ -6,39 +6,44 @@ import { DeniedFrameHandler, ErrorFrameHandler } from "@/frames";
 import { AddressType } from "@/types/neynar";
 import { getMaxSybilScoreForAddresses } from "@/lib/sybil";
 import { getMaxTrustAmountForAddresses } from "@/lib/trust";
+import { kv } from "@vercel/kv";
+import { Session } from "@/types/session";
 
 export const ApplyFrameHandler = async (c) => {
-  let trustAmount = 0;
-
   const user = getInteractor(c);
   if (!user) {
     return ErrorFrameHandler(c);
   }
 
-  const addresses = getAddresses(user).filter(a => a.type !== AddressType.Custody);
-  if (addresses.length <= 0) {
-    console.log(`[${user.fid}] user denied for not having a connected address`);
-    return DeniedFrameHandler(c);
-  }
-
-  try {
-    const sybilScore = await getMaxSybilScoreForAddresses(user, addresses);
-    if (sybilScore <= 0) {
-      console.log(`[${user.fid}] user denied for failing sybil test`);
+  let { trustAmount = 0 } = ((await kv.get(`session:${user.fid}`)) ?? {}) as Session;
+  if (trustAmount <= 0) {
+    const addresses = getAddresses(user).filter(a => a.type !== AddressType.Custody);
+    if (addresses.length <= 0) {
+      console.log(`[${user.fid}] user denied for not having a connected address`);
       return DeniedFrameHandler(c);
     }
 
-    trustAmount = await getMaxTrustAmountForAddresses(sybilScore, user, addresses);
-    if (trustAmount <= 0) {
-      console.log(`[${user.fid}] user denied as no trust amount approved`);
-      return DeniedFrameHandler(c);
-    }
+    try {
+      const sybilScore = await getMaxSybilScoreForAddresses(user, addresses);
+      if (sybilScore <= 0) {
+        console.log(`[${user.fid}] user denied for failing sybil test`);
+        return DeniedFrameHandler(c);
+      }
 
-    console.log({ sybilScore, trustAmount });
-    // todo: store trustAmount in KV
-  } catch (error) {
-    console.error(error);
-    return ErrorFrameHandler(c);
+      trustAmount = await getMaxTrustAmountForAddresses(sybilScore, user, addresses);
+      if (trustAmount <= 0) {
+        console.log(`[${user.fid}] user denied as no trust amount approved`);
+        return DeniedFrameHandler(c);
+      }
+
+      await kv.set(`session:${user.fid}`, {
+        sybilScore,
+        trustAmount,
+      })
+    } catch (error) {
+      console.error(error);
+      return ErrorFrameHandler(c);
+    }
   }
 
   return c.res({
