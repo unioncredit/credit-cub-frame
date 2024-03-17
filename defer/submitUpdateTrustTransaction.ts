@@ -47,12 +47,14 @@ const submitUpdateTrustTransaction = async(address: string, trustAmount: number)
     const hash = await safeSdk.getTransactionHash(tx);
     console.log("Created safe transaction hash");
 
-    const approveTxResponse = await safeSdk.approveTransactionHash(hash);
-    await approveTxResponse.transactionResponse?.wait();
+    await safeSdk.approveTransactionHash(hash);
+
+    // note: defender relay provider doesn't properly implement confirmations,
+    // so we can't use .wait() here
+    await new Promise(r => setTimeout(r, 6000));
     console.log("Approved safe transaction hash");
 
-    const executeTxResponse = await safeSdk.executeTransaction(tx);
-    await executeTxResponse.transactionResponse?.wait();
+    await safeSdk.executeTransaction(tx);
     console.log("Safe transaction executed!");
   } catch (err) {
     console.log("Failed to create update trust transaction: " + err);
