@@ -47,10 +47,12 @@ const submitUpdateTrustTransaction = async(address: string, trustAmount: number)
     const hash = await safeSdk.getTransactionHash(tx);
     console.log("Created safe transaction hash");
 
-    await safeSdk.approveTransactionHash(hash);
+    const approveTxResponse = await safeSdk.approveTransactionHash(hash);
+    await approveTxResponse.transactionResponse?.wait();
     console.log("Approved safe transaction hash");
 
-    await safeSdk.executeTransaction(tx);
+    const executeTxResponse = await safeSdk.executeTransaction(tx);
+    await executeTxResponse.transactionResponse?.wait();
     console.log("Safe transaction executed!");
   } catch (err) {
     console.log("Failed to create update trust transaction: " + err);
