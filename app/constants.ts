@@ -7,7 +7,7 @@ export const ZORA_TOKEN_ID = "1";
 export const DWR_FID = 3;
 export const KINGJACOB_FID = 1002;
 export const VITALIK_FID = 5650;
-export const CREDITCUB_FID = 1337;
+export const CREDITCUB_FID = 384385;
 
 export const SAFE_ADDRESS = "0x4C7768794f38096b8977C7a9E64b85dd63031d27";
 export const NOUNS_NFT_ADDRESS = "0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03";
