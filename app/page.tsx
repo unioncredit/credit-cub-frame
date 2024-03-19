@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import CreditLedger from "@/components/ledger/Table";
 import { kv } from "@vercel/kv";
+import { Session } from "@/types/session";
 
 export const revalidate = 0;
 
@@ -22,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const data = await Promise.all((await kv.smembers("global:ledger")).map(fid =>
     kv.get(`session:${fid}`)
-  ));
+  )) as Session[];
 
   return (
     <main className={styles.main}>

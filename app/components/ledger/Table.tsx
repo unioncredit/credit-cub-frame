@@ -17,6 +17,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { TableHead } from "@mui/material";
+import { Session } from "@/types/session";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -84,7 +85,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export default function CreditLedger({ rows }) {
+export default function CreditLedger({ rows }: { rows: Session[] }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -136,7 +137,7 @@ export default function CreditLedger({ rows }) {
                 {row.name}
               </TableCell>
               <TableCell style={{ minWidth: 150 }}>
-                {row.address.length > 15 ? `${row.address.substring(0, 6)}...${row.address.substring(row.address.length - 4)}` : row.address}
+                {row.address ? `${row.address!.substring(0, 6)}...${row.address!.substring(row.address!.length - 4)}` : "-"}
               </TableCell>
               <TableCell style={{ minWidth: 150 }}>
                 {usd.format(row.trustAmount)}
