@@ -30,16 +30,14 @@ export const SuccessFrameHandler = async (c: any) => {
   // submit transaction via https://defer.run/ to avoid frame timeout
   await submitUpdateTrustTransaction(address, trustAmount);
   await kv.set(`session:${user.fid}`, { ...session, address, claimed: true })
+  await kv.sadd("global:ledger", user.fid);
 
   return c.res({
     image: (
       <ChatContainer image={"desk"}>
-        <ChatBox
-          padding={16}
-         
-        >
-          <Text mt={0} size={42}>
-            Thank you, your ${trustAmount} in credit is on its way, backed solely by CreditCub's trust in you. Your credit may take a few minutes to arrive. Mint to activate your account.
+        <ChatBox padding={16}>
+          <Text mt={0} size={36}>
+            Thank you, your ${trustAmount} in credit is on its way, backed solely by CreditCub's trust in you. Mint to activate your membership, borrow from CC on Union, and pay it forward by vouching for a friend.
           </Text>
         </ChatBox>
       </ChatContainer>

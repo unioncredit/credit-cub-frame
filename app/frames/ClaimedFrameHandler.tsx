@@ -20,8 +20,8 @@ export const ClaimedFrameHandler = async (c: any) => {
     image: (
       <ChatContainer image={"desk"}>
         <ChatBox padding={16}>
-          <Text mt={0} size={42}>
-            You have already claimed. You were approved for {trustAmount} DAI in credit. Visit Union to become a member and start borrowing.
+          <Text mt={0} size={39}>
+            You have already claimed. You were approved for {trustAmount} DAI in credit. Mint to activate your membership, borrow from CC on Union, and pay it forward by vouching for a friend.
           </Text>
         </ChatBox>
       </ChatContainer>

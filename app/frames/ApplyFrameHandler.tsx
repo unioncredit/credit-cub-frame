@@ -9,6 +9,7 @@ import { getMaxTrustAmountForAddresses } from "@/lib/trust";
 import { kv } from "@vercel/kv";
 import { Session } from "@/types/session";
 import { Text } from "@/components/shared";
+import { SybilFailedFrameHandler } from "@/frames/SybilFailedFrameHandler";
 
 export const ApplyFrameHandler = async (c: any) => {
   const user = getInteractor(c);
@@ -25,23 +26,39 @@ export const ApplyFrameHandler = async (c: any) => {
     const addresses = getAddresses(user).filter(a => a.type !== AddressType.Custody);
     if (addresses.length <= 0) {
       console.log(`[${user.fid}] user denied for not having a connected address`);
-      return DeniedFrameHandler(c);
+      return SybilFailedFrameHandler(c);
     }
 
     try {
       const sybilScore = await getMaxSybilScoreForAddresses(user, addresses);
       if (sybilScore <= 0) {
+        await kv.set(`session:${user.fid}`, {
+          fid: user.fid,
+          name: user.username,
+          sybilScore,
+          trustAmount,
+        });
+
         console.log(`[${user.fid}] user denied for failing sybil test`);
-        return DeniedFrameHandler(c);
+        return SybilFailedFrameHandler(c);
       }
 
       trustAmount = await getMaxTrustAmountForAddresses(sybilScore, user, addresses);
       if (trustAmount <= 0) {
+        await kv.set(`session:${user.fid}`, {
+          fid: user.fid,
+          name: user.username,
+          sybilScore,
+          trustAmount,
+        });
+
         console.log(`[${user.fid}] user denied as no trust amount approved`);
         return DeniedFrameHandler(c);
       }
 
       await kv.set(`session:${user.fid}`, {
+        fid: user.fid,
+        name: user.username,
         sybilScore,
         trustAmount,
       });
