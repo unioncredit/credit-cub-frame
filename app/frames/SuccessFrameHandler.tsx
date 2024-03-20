@@ -5,7 +5,7 @@ import { kv } from "@vercel/kv";
 import { Session } from "@/types/session";
 import { getInteractor } from "@/utils/neynar";
 import { ErrorFrameHandler } from "@/frames/ErrorFrameHandler";
-import { SAFE_ADDRESS, ZORA_COLLECTION_ID, ZORA_TOKEN_ID } from "@/constants";
+import { ZORA_COLLECTION_ID, ZORA_TOKEN_ID } from "@/constants";
 import { Text } from "@/components/shared";
 import submitUpdateTrustTransaction from "../../defer/submitUpdateTrustTransaction";
 
@@ -46,9 +46,9 @@ export const SuccessFrameHandler = async (c: any) => {
       <Button.Link href={`https://zora.co/collect/base:${ZORA_COLLECTION_ID}/${ZORA_TOKEN_ID}`}>
         Mint
       </Button.Link>,
-      <Button.Link href={"https://app.union.finance/"}>Visit Union</Button.Link>,
-      <Button.Link href={`https://app.safe.global/transactions/history?safe=oeth:${SAFE_ADDRESS}`}>
-        💰 View Safe
+      <Button.Link href={`https://app.union.finance/profile/opt:${address}`}>Your account</Button.Link>,
+      <Button.Link href={`${process.env.NEXT_PUBLIC_URL!}#ledger`}>
+        🏦 View Ledger
       </Button.Link>,
     ],
   })

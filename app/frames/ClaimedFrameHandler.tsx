@@ -6,7 +6,7 @@ import { Session } from "@/types/session";
 import { getInteractor } from "@/utils/neynar";
 import { ErrorFrameHandler } from "@/frames/ErrorFrameHandler";
 import { Text } from "@/components/shared";
-import { SAFE_ADDRESS, ZORA_COLLECTION_ID, ZORA_TOKEN_ID } from "@/constants";
+import { ZORA_COLLECTION_ID, ZORA_TOKEN_ID } from "@/constants";
 
 export const ClaimedFrameHandler = async (c: any) => {
   const user = getInteractor(c);
@@ -14,7 +14,7 @@ export const ClaimedFrameHandler = async (c: any) => {
     return ErrorFrameHandler(c);
   }
 
-  let { trustAmount = 0 } = ((await kv.get(`session:${user.fid}`)) ?? {}) as Session;
+  let { address, trustAmount = 0 } = ((await kv.get(`session:${user.fid}`)) ?? {}) as Session;
 
   return c.res({
     image: (
@@ -30,9 +30,11 @@ export const ClaimedFrameHandler = async (c: any) => {
       <Button.Link href={`https://zora.co/collect/base:${ZORA_COLLECTION_ID}/${ZORA_TOKEN_ID}`}>
         Mint
       </Button.Link>,
-      <Button.Link href={"https://app.union.finance/"}>Visit Union</Button.Link>,
-      <Button.Link href={`https://app.safe.global/transactions/history?safe=oeth:${SAFE_ADDRESS}`}>
-        💰 View Safe
+      <Button.Link href={address ? `https://app.union.finance/profile/opt:${address}` : "https://app.union.finance/"}>
+        {address ? "Your account" : "Visit Union"}
+      </Button.Link>,
+      <Button.Link href={`${process.env.NEXT_PUBLIC_URL!}#ledger`}>
+        🏦 View Ledger
       </Button.Link>,
     ],
   })
