@@ -55,7 +55,7 @@ export default async function Home() {
           </svg>
         </a>
 
-        <h2 id="ledger" className={styles.header} style={{ marginTop: 48 }}>The Legder</h2>
+        <h2 id="ledger" className={styles.header} style={{ marginTop: 48 }}>The Ledger</h2>
         <CreditLedger rows={data} />
       </div>
 
