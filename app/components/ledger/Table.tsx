@@ -137,7 +137,10 @@ export default function CreditLedger({ rows }: { rows: Session[] }) {
                 {row.name}
               </TableCell>
               <TableCell style={{ minWidth: 150 }}>
-                {row.address ? `${row.address!.substring(0, 6)}...${row.address!.substring(row.address!.length - 4)}` : "-"}
+                {row.address ? `${row.address!.substring(0, 6)}...${row.address!.substring(row.address!.length - 4)} ` : "-"}
+
+                <a target="_blank" rel="noopener" href={`https://optimistic.etherscan.io/address/${row.address}`}>🔗 </a>
+                <a target="_blank" rel="noopener" href={`https://app.union.finance/profile/opt:${row.address}`}>👤</a>
               </TableCell>
               <TableCell style={{ minWidth: 150 }}>
                 {usd.format(row.trustAmount)}
