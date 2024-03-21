@@ -27,7 +27,7 @@ export const getAddresses = (user: NeynarUser): InteractorAddress[] => {
     });
   });
 
-  if (addresses.length === 0 && user.custodyAddress && user.custodyAddress !== '0x') {
+  if (addresses.length === 0 && user.custodyAddress) {
     addresses.push({
       full: user.custodyAddress,
       short: user.custodyAddress.slice(0, 6),
@@ -35,5 +35,5 @@ export const getAddresses = (user: NeynarUser): InteractorAddress[] => {
     });
   }
 
-  return addresses;
+  return addresses.filter(a => a.full !== '0x');
 }
